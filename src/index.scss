@@ -1,0 +1,30 @@
+@import "custom.scss"; 
+
+
+body {
+  margin: 0;
+  font-family: Parastoo;
+ 
+}
+
+
+
+@font-face {
+  font-family: Parastoo;
+  src: url('./fonts/parastoo/web/Parastoo.eot');
+  src: url('./fonts/parastoo/web/Parastoo.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/parastoo/web/Parastoo.woff2') format('woff2'),
+       url('./fonts/parastoo/web/Parastoo.woff') format('woff'),
+       url('./fonts/parastoo/web/Parastoo.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Parastoo;
+  src: url('./fonts/parastoo/web/Parastoo-Bold.eot');
+  src: url('./fonts/parastoo/web/Parastoo-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/parastoo/web/Parastoo-Bold.woff2') format('woff2'),
+       url('./fonts/parastoo/web/Parastoo-Bold.woff') format('woff'),
+       url('./fonts/parastoo/web/Parastoo-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
