@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button'
 import Toast from 'react-bootstrap/Toast'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
+import Card from 'react-bootstrap/Card'
 
 export default function ChangePassword(props) {
 
@@ -64,22 +64,23 @@ export default function ChangePassword(props) {
             )
             .then((res)=> {
               console.log(res.status);
-
-              if(res.status === 204){
+              setShow(true);
+              //if(res.status === 204){
                 console.log("OK");
                 setIsChanged (true);
-                props.onHide();
-              }
+                //props.onHide();
+              //}
               setIsResponced(true);
               setIsLoading(false);
 
             })
             .catch(e => {
               console.log("error:",e);
+              setShow(true);
+             // props.show = true;
               setIsLoading(false);
               setIsResponced(true);
-              // setError([e]);
-              // console.log(error);
+              setError(true);
             })
       }
 
@@ -95,31 +96,23 @@ export default function ChangePassword(props) {
    
     
     content=
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter text-right">
-                
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="text-center">
+          <Card className="text-center border-0">
+            <Card.Title className="h5 text-primary text-right pt-4 px-4"><small className="text-primary">برای تغییر رمزعبور اطلاعات زیر را تکمیل کنید:</small> </Card.Title>
+            <Card.Body className="text-center">
+            
              <div>
-                  <form className=""  method="POST" >
+                  <form className=""  method="POST" onSubmit={(e) => {handleSubmit(e);}} >
                           
                           <div className="form-group border rounded-lg shadow-top-sm" >
                           <input 
-                              aria-label="userName "
+                              aria-label="cuPassword"
                               name="curPassword"
                               id="curPassword" 
-                              type="text"
+                              type="password"
                               placeholder="رمز عبور فعلی"
                               onChange={(e) => {setState({...state, curPassword : e.target.value})}}
                               required 
-                              className="form-control border-0"
+                              className="form-control"
                               />
                           </div>
 
@@ -148,23 +141,26 @@ export default function ChangePassword(props) {
                          
                             {error && <label variant="danger">{error}</label>}
                          
+                            <div className="form-group">
+                              <Button className="text-center" type="submit"> 
+                              {isLoading? <Spinner animation="border" variant="primary" />:" تغییر رمزعبور"} 
+                              </Button>
+                            </div>
 
                   </form>
                   
              </div>
 
-            </Modal.Body>
-            <Modal.Footer >
-                <Button className="text-center" onClick={(e) => {handleSubmit(e);setShow(true);}} > {isLoading? <Spinner animation="border" variant="primary" />:error?"تلاش دوباره"  : " تغییر رمزعبور"} </Button>
-            </Modal.Footer>
-        </Modal>
+            </Card.Body>
+            
+        </Card>
    
 
-
+let result=null;
 
    
 if(isChanged){
-  content=
+  result=
   <div className="fixed-bottom mx-4 my-4">
         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
           <Toast.Header>
@@ -181,57 +177,20 @@ if(isChanged){
           </Toast.Header>
           <Toast.Body>
           رمزعبور شما با موفقیت تغییر کرد
-            {/* {!isChanged?
-            "رمزعبور شما با موفقیت تغییر کرد."
-              :
-              "  رمز عبور شما بنا به دلیلی تغییر نکرد:(  دوباره امتحان کنید"
-            } */}
+         
           </Toast.Body>
         </Toast>
       </div> 
 
 }
 
-// content = 
-//       <div className="fixed-bottom mx-4 my-4">
-//         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
-//           <Toast.Header>
-//           <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
-// <p></p>
-//             <img
-//               src="holder.js/20x20?text=%20"
-//               className="rounded mr-2"
-//               alt=""
-//             />
-            
-            
-//             <small></small>
-//           </Toast.Header>
-//           <Toast.Body>
-//             {isChanged?
-//             "رمزعبور شما با موفقیت تغییر کرد."
-//               :
-//               "  رمز عبور شما بنا به دلیلی تغییر نکرد:(  "
-//               +
-//               "دوباره امتحان کنید"
-//             }
-//           </Toast.Body>
-//         </Toast>
-//       </div> 
-
-
-
-
-
-   return (
-    <div>
-      {content}
-
-      {/* <div className="fixed-bottom mx-4 my-4">
+if(error){
+  result=
+  <div className="fixed-bottom mx-4 my-4">
         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
           <Toast.Header>
           <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
-<p></p>
+            <p></p>
             <img
               src="holder.js/20x20?text=%20"
               className="rounded mr-2"
@@ -242,16 +201,23 @@ if(isChanged){
             <small></small>
           </Toast.Header>
           <Toast.Body>
-            {isChanged?
-            "رمزعبور شما با موفقیت تغییر کرد."
-              :
-              "  رمز عبور شما بنا به دلیلی تغییر نکرد:(  "
-              +
-              "دوباره امتحان کنید"
-            }
+          تغییر رمزعبور شما با مشکل مواجه شد
+          دوباره امتحان کنید
+            
           </Toast.Body>
-        </Toast> */}
-      {/* </div>  */}
+          
+        </Toast>
+      </div> 
+
+}
+
+
+
+   return (
+    <div>
+      {content}
+      {result}
+     
     </div>
   )
 }

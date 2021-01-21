@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import xtype from 'xtypejs';
+//import xtype from 'xtypejs';
 
 export const getApi = () =>{
   return 'http://95.156.252.188:8000';
@@ -19,9 +19,13 @@ export const setUserSession = (token,refresh) => {
   sessionStorage.setItem('refresh', refresh);
   sessionStorage.setItem('loginStart', Date());
   sessionStorage.setItem('refreshStart', Date());
+  sessionStorage.setItem('loggedIn',true);
 }
 
-
+export const getUser=()=>{
+  //if(sessionStorage.getItem('loggedIn')===true) sessionStorage.setItem('loggedIn',false);
+  return sessionStorage.getItem('loggedIn')||false;
+}
 // return the token from the session storage
 export const getToken = () => {
   const url=getApi();
@@ -56,8 +60,13 @@ export const getToken = () => {
 
 // // remove the token and user from the session storage
 export const removeUserSession = () => {
-  console.log("logout");
+  //console.log("logout");
+  sessionStorage.removeItem('loggedIn');
   sessionStorage.removeItem('token');
+  sessionStorage.removeItem('refresh');
+  sessionStorage.removeItem('loginStart');
+  sessionStorage.removeItem('refreshStart');
+
   // sessionStorage.removeItem('user');
 }
 

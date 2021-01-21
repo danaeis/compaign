@@ -6,6 +6,12 @@ import 'font-awesome/css/font-awesome.min.css';
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
+import { Card } from "react-bootstrap";
+import Image from 'react-bootstrap/Image'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import logo2 from "../../images/logo2.png"
+import Profile from "./Profile";
 
 export default function CampDetail(props) {
 
@@ -46,27 +52,39 @@ export default function CampDetail(props) {
   
   if (error) {
     content=
-    <Modal>
+    <Card>
       {error}
-    </Modal>
+    </Card>
 
   }
   if(isResponced ){
 
    console.log(compaign);
         content=
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter text-right">
-                
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="text-center">
+        <Card className="text-center">
+            <Card.Header className="bg-light text-center">
+            <Row className=" px-auto">
+              <Col xs={3} md={2} className="mx-auto mr-0">
+                <Image src={logo2} rounded fluid/>
+              </Col>
+              
+              {/* <Col xs={5} md={5} >
+                <p className=" text-info font-weight-bold ">
+                  <br/><br/>
+                سامانه اردوها ی دانشگاه شهید رجایی
+                </p>
+              </Col> */}
+
+            </Row>
+               
+            <p className=" text-info font-weight-bold ">
+                  <br/>
+                سامانه اردوهای دانشگاه شهید رجایی
+                </p>
+           
+              </Card.Header>
+            <Card.Body className="text-center">
+            
                 <h4 className="text-primary">{compaign.name}</h4>
                 <h5 className="text-black">
                 {compaign.description} 
@@ -80,18 +98,18 @@ export default function CampDetail(props) {
                   <small className="text-black">زمان برگزاری: </small>
                   {compaign.execution_time}
                   </h5>
-            </Modal.Body>
-            <Modal.Footer >
+            </Card.Body>
+            <Card.Footer >
                 <Button className="text-center"  >{compaign.is_registered? "ثبت نام شده" : "ثبت نام "}</Button>
-            </Modal.Footer>
-        </Modal>
+            </Card.Footer>
+        </Card>
 
   }
   else{
     content = 
-     <Modal>
+     <Card>
          یافت نشد . . 
-     </Modal>
+     </Card>
     
   }
 
@@ -99,6 +117,7 @@ export default function CampDetail(props) {
 
   return (
     <div >
+      {Profile}
       {content}
     </div>
   )

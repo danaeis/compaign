@@ -1,6 +1,7 @@
 import { BrowserRouter as Router,
   Switch,
-  Route, 
+  Route,
+  Redirect, 
 } from 'react-router-dom'
 import React, { useState, useEffect } from "react"
 import axios from 'axios';
@@ -12,8 +13,9 @@ import UserProfile from './components/dashboard/UserProfile.js'
 
 import PrivateRoute from './components/Utils/PrivateRoute';
 import PublicRoute from './components/Utils/PublicRoute';
-import { getToken, removeUserSession, setUserSession } from './components/Utils/Common';
+import { getUser, removeUserSession, setUserSession } from './components/Utils/Common';
 import ResetPassword from './components/login/ResetPassword';
+import ForgotPassword from './components/login/ForgotPassword';
 
  
 
@@ -42,30 +44,19 @@ function App() {
 
 
   return (
-    <div className="container">
+    <div className="container-fluid">
+      
       <Router>
         <Switch>
-          <PublicRoute path="/login">
-            <LoginForm  />
-          </PublicRoute>
-          {/* <PublicRoute path='/password/reset/confirm/:id/:token'>
-            <ResetPassword/>
-          </PublicRoute> */}
-          <PrivateRoute path="/ChangePassword">
-            <ChangePassword />
-          </PrivateRoute>
-          <PrivateRoute exact path="/dashboard">
-            <UserDashboard/>
-          </PrivateRoute>
-          <PrivateRoute exact path="/dashboard/profile">
-            <UserProfile/>
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/profile/changePassword">
-            <ChangePassword/>
-          </PrivateRoute>
-          <Route exact path="/">
-            <LoginForm />
-          </Route>
+          <PublicRoute restricted={true} component={LoginForm} path="/login" exact />
+          <PublicRoute restricted={true} component={ResetPassword} path="/password/reset/confirm/:uid/:token"></PublicRoute>
+          
+          <PublicRoute component={ForgotPassword} path="/forgotPassword" exact/>
+          
+          <PrivateRoute component={UserDashboard} path="/dashboard" exact/>
+          <PrivateRoute component={UserProfile} path="/dashboard/profile/" exact/>
+          <PrivateRoute component={ChangePassword} path="/dashboard/profile/ChangePassword" exact/>
+
         </Switch>
     </Router>
     </div>

@@ -55,8 +55,13 @@ export default function Compaign() {
 
     let handleModal = (id) => {
       // console.log("on click",id)
-      setModalShow(true); 
+      // setModalShow(true); 
       setCompId(id);
+      <CampDetail
+        // show={modalShow}
+        // onHide={() => setModalShow(false)}
+        id = {compId}
+      />  
     } 
 
 
@@ -91,13 +96,13 @@ export default function Compaign() {
                 </Card>
             
           )}
-          {compId>0 &&  modalShow &&
+          {/* {compId>0 &&  modalShow && */}
                         <CampDetail
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
+                        // show={modalShow}
+                        // onHide={() => setModalShow(false)}
                         id = {compId}
                       />  
-                      }
+                      {/* } */}
           </CardDeck>
             
             

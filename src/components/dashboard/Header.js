@@ -8,6 +8,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 
 import Modal from 'react-bootstrap/Modal'
+import { Link } from "react-router-dom";
 
 
 export default function Header({ fixed }) {
@@ -42,6 +43,9 @@ export default function Header({ fixed }) {
       })
   },[url])
   
+
+
+  
   if(isResponced){
     if(isAuthorized){
       content = 
@@ -57,16 +61,16 @@ export default function Header({ fixed }) {
         </Nav>
 
 
-        <Modal show={logoutShow} onHide={handleClose}>
+        <Modal show={logoutShow} onHide={handleClose} className="text-right">
           
           <Modal.Body>میخواهید خارج شوید؟ </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={handleClose}>
               لغو
             </Button>
-            <Button variant="primary" onHover="shadow-lg" onClick={removeUserSession} href="/login">
+            <Link to="/login" variant="primary" onHover="shadow-lg" onClick={removeUserSession} >
               خروج
-            </Button>
+            </Link>
           </Modal.Footer>
         </Modal>
 
@@ -86,7 +90,7 @@ export default function Header({ fixed }) {
     content = 
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light" className="mx-0 my-3" >
       <Navbar.Brand href="#home">سامانه ی اردوها</Navbar.Brand>
-      <p className="text-danger">در انتظار سرور  . .</p>
+      <p className="text-danger">لطفا منتظر بمانید. .</p>
       <Spinner animation="border" variant="primary" />
       </Navbar>
       
