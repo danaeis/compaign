@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axios from 'axios'
 import {getApi,getToken,removeUserSession} from '../Utils/Common'
 import Navbar from 'react-bootstrap/Navbar'
@@ -9,7 +9,8 @@ import Button from 'react-bootstrap/Button'
 
 import Modal from 'react-bootstrap/Modal'
 import { Link } from "react-router-dom";
-
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 export default function Header({ fixed }) {
   const [userName, setUserName] = useState('');
@@ -44,33 +45,56 @@ export default function Header({ fixed }) {
   },[url])
   
 
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props} className="bg-light" variant="light">
+      صفحه ی اصلی
+    </Tooltip>
+  );
 
-  
   if(isResponced){
     if(isAuthorized){
       content = 
      
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light" className="mx-0 my-3 rounded" >
-      <Navbar.Brand href="/dashboard" className="h5">سامانه ی اردوها</Navbar.Brand>
+      {/* <Navbar.Brand href="/dashboard" className="h5" >سامانه ی اردوها</Navbar.Brand> */}
+        {/* <OverlayTrigger
+          placement="left"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip}
+          className="bg-light" variant="light"
+        > */}
+          
+          <Navbar.Brand href="/dashboard" className="h5 peach-gradient" >
+            سامانه ی اردوها
+          <small className="text-primary mx-3">
+            سعیده دانایی
+            {/* {userName} */}
+            </small>
+          </Navbar.Brand>
+        {/* </OverlayTrigger> */}
+      
+
       <Navbar.Toggle aria-controls="responsive-navbar-nav"  className="primary"></Navbar.Toggle>
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#" className="d-none d-lg-block">{userName}</Nav.Link>
-          <Nav.Link href="/dashboard/profile"  >پروفایل</Nav.Link>
+          <Nav.Link href="/dashboard" className="d-none d-lg-block">صفحه ی اصلی</Nav.Link>
+          <Nav.Link href="/dashboard/profile">   پروفایل</Nav.Link>
           <Nav.Link href="#" onClick={handleShow} >خروج</Nav.Link>
         </Nav>
 
 
-        <Modal show={logoutShow} onHide={handleClose} className="text-right">
+        <Modal show={logoutShow} onHide={handleClose} >
           
-          <Modal.Body>میخواهید خارج شوید؟ </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={handleClose}>
-              لغو
-            </Button>
-            <Link to="/login" variant="primary" onHover="shadow-lg" onClick={removeUserSession} >
+          <Modal.Body className="text-right">میخواهید خارج شوید؟ 
+          
+          </Modal.Body>
+          <Modal.Footer className="text-center" >
+          <div className="form-group">
+            
+            <Link to="/login" variant="primary" onHover="shadow-lg" className="text-center" onClick={removeUserSession} >
               خروج
             </Link>
+          </div>  
           </Modal.Footer>
         </Modal>
 

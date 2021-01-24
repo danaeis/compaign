@@ -11,10 +11,12 @@ import Image from 'react-bootstrap/Image'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import logo2 from "../../images/logo2.png"
-import Profile from "./Profile";
+import Header from "./Header";
+import { useParams } from 'react-router-dom';
 
 export default function CampDetail(props) {
 
+  const {id} = useParams();
   const [compaign, setCompaign] = useState([]);
   const [error, setError] = useState(null);
   const [isResponced, setIsResponced] = useState(false);
@@ -29,7 +31,7 @@ export default function CampDetail(props) {
     
 
   useEffect(()=>{
-    axios.get(`${url}/api/reserve/camp/detail/${props.id}/`,
+    axios.get(`${url}/api/reserve/camp/detail/${id}/`,
       {
         headers:{
           'authorization': `JWT ${getToken()}`
@@ -61,48 +63,42 @@ export default function CampDetail(props) {
 
    console.log(compaign);
         content=
-        <Card className="text-center">
-            <Card.Header className="bg-light text-center">
-            <Row className=" px-auto">
-              <Col xs={3} md={2} className="mx-auto mr-0">
-                <Image src={logo2} rounded fluid/>
-              </Col>
-              
-              {/* <Col xs={5} md={5} >
-                <p className=" text-info font-weight-bold ">
-                  <br/><br/>
-                سامانه اردوها ی دانشگاه شهید رجایی
-                </p>
-              </Col> */}
-
-            </Row>
-               
-            <p className=" text-info font-weight-bold ">
-                  <br/>
-                سامانه اردوهای دانشگاه شهید رجایی
-                </p>
-           
-              </Card.Header>
-            <Card.Body className="text-center">
-            
-                <h4 className="text-primary">{compaign.name}</h4>
-                <h5 className="text-black">
-                {compaign.description} 
-                </h5>
-                <h5 className="text-primary">
-                  <small className="text-black">هزینه ثبت نام:     </small>
-                     {compaign.cost} تومان
+        <div className="relative col-md-10 col-sm-10 col-lg-10 mx-auto my-auto">
+            <div className="card text-center border-0 shadow z-depth-2 rounded">
+              <Card className="text-center">
+                  <Card.Header className="bg-light text-center">
+                  <Row className=" px-auto">
                   
-                  </h5>
-                <h5 className="text-primary">
-                  <small className="text-black">زمان برگزاری: </small>
-                  {compaign.execution_time}
-                  </h5>
-            </Card.Body>
-            <Card.Footer >
-                <Button className="text-center"  >{compaign.is_registered? "ثبت نام شده" : "ثبت نام "}</Button>
-            </Card.Footer>
-        </Card>
+
+                  </Row>
+                  <Card.Title className="text-primary">{compaign.name}</Card.Title>
+                
+                
+                    </Card.Header>
+                  <Card.Body className="text-center">
+                  
+                    
+                      <h5 className="text-black">
+                        <small className="ml-3 text-primary ">توضیحات اردو:</small>
+                      {compaign.description} 
+                      </h5>
+                      <h5 className="text-primary">
+                        <small className="text-black">هزینه ثبت نام:     </small>
+                          {compaign.cost} تومان
+                        
+                        </h5>
+                      <h5 className="text-primary">
+                        <small className="text-black">زمان برگزاری: </small>
+                        {compaign.execution_time}
+                        </h5>
+                        <Button className="text-center my-3 px-5"  >{compaign.is_registered? "ثبت نام شده" : "ثبت نام "}</Button>
+                  </Card.Body>
+                  {/* <Card.Footer >
+                      <Button className="text-center"  >{compaign.is_registered? "ثبت نام شده" : "ثبت نام "}</Button>
+                  </Card.Footer> */}
+              </Card>
+            </div>
+        </div>
 
   }
   else{
@@ -117,7 +113,7 @@ export default function CampDetail(props) {
 
   return (
     <div >
-      {Profile}
+      <Header></Header>
       {content}
     </div>
   )

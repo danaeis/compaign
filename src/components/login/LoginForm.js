@@ -47,12 +47,12 @@ let validate = ()=>{
   if (input.userName === "") {
     isValid = false;
     setIsError(true);
-    errors["userName"] = "شماره دانشجویی خود را وارد کنید";
+    errors += "شماره دانشجویی خود را وارد کنید\n";
   }    
   if (input.password === "") {
     isValid = false;
     setIsError(true);
-    errors["password"] = "رمز عبور را وارد کنید";
+    errors += "رمز عبور را وارد کنید\n";
   }
 
 
@@ -90,9 +90,15 @@ let handleSubmit = (event)=>{
     console.log("error", error );
 
     }).catch((e) => {
-      setError(e.detail);
-      
-      console.log("error", error );
+      setError(e.response.data.detail);
+      if(e.response.status === 401){
+        setError("نام کاربری و یا رمز عبورتان نادرست است");
+      }
+      setIsError(true);
+      //console.log(e.response.data.detail);
+      // console.log(e);
+      console.log(e.response);
+
       setIsLoading(false);
       
     });
@@ -141,7 +147,12 @@ return(
                 </Card.Title>
                 <Card.Text>
                 <form className=""  to="/dashboard" method="POST" onSubmit={handleSubmit} >
-                          
+                        <label variant="danger" className="texts text-danger pb-3">
+                          {isError ? error 
+                          :null }
+                        </label>
+
+
                           <div className="form-group rounded-lg shadow-top-sm">
                             {labelShowU && <label >شماره ی دانشجویی:</label>}
                           <input 
@@ -149,12 +160,12 @@ return(
                               name="userName" 
                               type="text" 
                               // required 
-                              className="form-control "
+                              className="form-control border"
                               placeholder="شماره ی دانشجویی"
                               onChange={(e) => {setInput({...input, userName : e.target.value})}}
                               
                           />
-                          <p className="text-danger"> {isError ? error["userName"]:null } </p>
+                          {/* <p className="text-danger"> {isError ? error["userName"]:null } </p> */}
                           </div>
 
                           <div className="form-group rounded-lg shadow-top-sm" >
@@ -169,17 +180,17 @@ return(
                               onChange={(e) => {setInput({...input, password : e.target.value}); }}
                              
                               />
-                              <p className="text-danger"> {isError ?error["password"]:null} </p>
+                              {/* <p className="text-danger"> {isError ?error["password"]:null} </p> */}
                           </div>
                           
                          
-                            <label variant="danger">{error}</label>
+                           
                          
                           
                           <Button
                                     type="submit"
                                     varient="primary"
-                                    className=" d-block mx-auto "
+                                    className=" d-block mx-auto my-3 px-5 mt-4"
                                     
                                     >
                                     

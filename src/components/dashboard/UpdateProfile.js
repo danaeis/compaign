@@ -24,10 +24,10 @@ export default function UpdateProfile(props) {
     
     const [userName, setUserName] = useState('');
     const [studentCode, setStudentCode] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    //const [phoneNumber, setPhoneNumber] = useState('');
     const [studyField, setStudyField] = useState('');
-    const [email, setEmail] = useState(' ');
-    const [account, setAccount] = useState(' ');
+    //const [email, setEmail] = useState(' ');
+    //const [account, setAccount] = useState(' ');
 
 
  
@@ -55,13 +55,14 @@ export default function UpdateProfile(props) {
       .then((res)=> {
         setUserName(`${res.data.first_name} ${res.data.last_name}`);
         setStudentCode(`${res.data.student_code}`);
-        setPhoneNumber(`${res.data.mobile_phone_number}`);
+        input.mobile_phone_number = res.data.mobile_phone_number ;
         setStudyField(`${res.data.field_of_study}`);
-        setEmail(`${res.data.email}`)
+        input.email = res.data.email ;
+        input.account_number = res.data.account_number ;
 
         // setIsAuthorized(true);
         setIsResponced(true);
-        //console.log(userName);
+        // console.log(input);
       })
       .catch((error) => {
         setIsResponced(true);
@@ -104,7 +105,7 @@ export default function UpdateProfile(props) {
       if(validate()){
         console.log("on call");
         
-        axios.post(`${url}/api/identity/profile/update/`,
+        axios.put(`${url}/api/identity/profile/update/`,
         
             {
                 "mobile_phone_number": input.mobile_phone_number,
@@ -122,9 +123,9 @@ export default function UpdateProfile(props) {
               console.log(res.status);
 
              
-                console.log("OK");
-                setIsUpdate (true);
-                props.onHide();
+              console.log("OK");
+              setIsUpdate (true);
+              
    
               setIsResponced(true);
               setIsLoading(false);
@@ -132,7 +133,7 @@ export default function UpdateProfile(props) {
             })
             .catch(e => {
               console.log("error:",e);
-             // props.show = true;
+             
               setIsLoading(false);
               setIsResponced(true);
               setError(true);
@@ -151,7 +152,7 @@ export default function UpdateProfile(props) {
    
     
     content=
-          <Card className="text-right border-none">
+          <Card className="text-right border-0">
             {/* <Card.Header className="bg-light text-center"> */}
               <Card.Title className="h5 text-primary text-right pt-4 px-4"><small className="text-primary">دانشجو:</small> {userName} </Card.Title>
             {/* </Card.Header> */}
@@ -163,37 +164,37 @@ export default function UpdateProfile(props) {
                           <div className="form-group rounded-lg shadow-top-sm">
                               <label className="text-info text-right">شماره دانشجویی:</label>
                           <input 
-                              aria-label="email" 
-                              name="email" 
+                              aria-label="studentCode" 
+                              name="studentCode" 
                               type="text" 
                               readOnly
                               className="form-control "
                               value={studentCode}
-                              onChange={(e) => {setInput({...input, email : e.target.value})}}
+                              // onChange={(e) => {setInput({...input, studentCode : e.target.value})}}
                           />
                           </div>
                          
                           <div className="form-group rounded-lg shadow-top-sm">
                               <label className="text-info">رشته تحصیلی:</label>
                           <input 
-                              aria-label="email" 
-                              name="email" 
+                              aria-label="studyField" 
+                              name="studyField" 
                               type="text" 
                               readOnly
                               className="form-control "
                               value={studyField}
-                              onChange={(e) => {setInput({...input, email : e.target.value})}}
+                              // onChange={(e) => {setInput({...input, email : e.target.value})}}
                           />
                           </div>      
                           
                           <div className="form-group rounded-lg shadow-top-sm" >
                               <label className="text-info">شماره تلفن:</label>
                           <input 
-                              aria-label="mobile_phone_number"
-                              name="mobile_phone_number"
-                              id="mobile_phone_number" 
+                              aria-label="phoneNumber"
+                              name="phoneNumber"
+                              id="phoneNumber" 
                               type="text"
-                              value={phoneNumber}
+                              value={input.mobile_phone_number}
                               onChange={(e) => {setInput({...input, mobile_phone_number : e.target.value})}}
                               required 
                               className="form-control"
@@ -205,10 +206,11 @@ export default function UpdateProfile(props) {
                           <input 
                               aria-label="account_number" 
                               name="account_number" 
+                              id="account_number"
                               type="text" 
                               required 
                               className="form-control "
-                              value={account||null}
+                              value={input.account_number}
                               onChange={(e) => {setInput({...input, account_number : e.target.value})}}
                               />
                           </div>
@@ -220,7 +222,7 @@ export default function UpdateProfile(props) {
                               type="text" 
                               required 
                               className="form-control "
-                              value={email}
+                              value={input.email}
                               onChange={(e) => {setInput({...input, email : e.target.value})}}
                           />
                           </div>
@@ -231,7 +233,7 @@ export default function UpdateProfile(props) {
                          
                             <div className="form-group">
                               <Button className="text-center" type="submit"> 
-                              {isLoading? <Spinner animation="border" variant="primary" />:error?"تلاش دوباره"  : " تغییر رمزعبور"} 
+                              {isLoading? <Spinner animation="border" variant="primary" />:" اعمال تغییرات"} 
                               </Button>
                             </div>
 
@@ -246,9 +248,9 @@ export default function UpdateProfile(props) {
 
 
 
-   
+   let result= null;
 if(isUpdate){
-  content=
+  result=
   <div className="fixed-bottom mx-4 my-4">
         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
           <Toast.Header>
@@ -264,7 +266,7 @@ if(isUpdate){
             <small></small>
           </Toast.Header>
           <Toast.Body>
-          رمزعبور شما با موفقیت تغییر کرد
+          تغییرات با موفقیت اعمال شد:)
             {/* {!isChanged?
             "رمزعبور شما با موفقیت تغییر کرد."
               :
@@ -277,7 +279,7 @@ if(isUpdate){
 }
 
 if(error){
-  content=
+  result=
   <div className="fixed-bottom mx-4 my-4">
         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
           <Toast.Header>
@@ -293,7 +295,7 @@ if(error){
             <small></small>
           </Toast.Header>
           <Toast.Body>
-          تغییر رمزعبور شما با مشکل مواجه شد
+          تغییر اطلاعات پروفایل شما با مشکل مواجه شد
           دوباره امتحان کنید
             {/* {!isChanged?
             "رمزعبور شما با موفقیت تغییر کرد."
@@ -313,7 +315,7 @@ if(error){
     <div>
 
       {content}
-
+      {result}
     </div>
   )
 }

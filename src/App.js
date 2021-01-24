@@ -9,7 +9,7 @@ import LoginForm from './components/login/LoginForm'
 import ChangePassword from './components/login/ChangePassword'
 import UserDashboard from './components/dashboard/UserDashboard.js'
 import UserProfile from './components/dashboard/UserProfile.js'
-
+import CampDetail from './components/dashboard/campDetail'
 
 import PrivateRoute from './components/Utils/PrivateRoute';
 import PublicRoute from './components/Utils/PublicRoute';
@@ -20,38 +20,18 @@ import ForgotPassword from './components/login/ForgotPassword';
  
 
 function App() {
-  // const [authLoading, setAuthLoading] = useState(true);
- 
-  // useEffect(() => {
-  //   const token = getToken();
-  //   if (!token) {
-  //     return;
-  //   }
- 
-  //   axios.get(`http://localhost:4000/verifyToken?token=${token}`).then(response => {
-  //     setUserSession(response.data.token, response.data.user);
-  //     setAuthLoading(false);
-  //   }).catch(error => {
-  //     removeUserSession();
-  //     setAuthLoading(false);
-  //   });
-  // }, []);
- 
-  // if (authLoading && getToken()) {
-  //   return <div className="content">Checking Authentication...</div>
-  // }
- 
-
-
+  
   return (
     <div className="container-fluid">
       
       <Router>
         <Switch>
+          <PublicRoute restricted={true} component={LoginForm} path="/" exact />
           <PublicRoute restricted={true} component={LoginForm} path="/login" exact />
           <PublicRoute restricted={true} component={ResetPassword} path="/password/reset/confirm/:uid/:token"></PublicRoute>
           
           <PublicRoute component={ForgotPassword} path="/forgotPassword" exact/>
+          <PublicRoute component={CampDetail} path="/campaignDetail/:id" exact/>
           
           <PrivateRoute component={UserDashboard} path="/dashboard" exact/>
           <PrivateRoute component={UserProfile} path="/dashboard/profile/" exact/>

@@ -14,34 +14,7 @@ import UpdateProfile from './UpdateProfile'
 import { Col,Row } from "react-bootstrap";
 export default function Profile({ fixed }) {
 
-
-  
-  const [error, setError] = useState("");
- 
-  const [isLoading, setIsLoading] = useState(false);
-  const [reset, setReset] = useState(false);
-
-  const [userName, setUserName] = useState('');
-  const [studentCode, setStudentCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [studyField, setStudyField] = useState('');
-  const [email, setEmail] = useState(' ');
-  const [account, setAccount] = useState(' ');
-
-
-  const [modalShow, setModalShow] = useState(false);
-  const [updateModalShow, setUpdateModalShow] = useState(false);
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isResponced, setIsResponced] = useState(false);
- 
-  const [show, setShow] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false);
- 
-
-
   let content = null;
- 
-
   
       content = 
         
@@ -51,17 +24,18 @@ export default function Profile({ fixed }) {
                     <Card.Body>
                       
                       <Card.Text>
-                        <Row>
-                      <Col>
-                      <UpdateProfile/>
-                      </Col>
+
+                        <Row className="mx-2">
+                          <Col className="border-right ml-2">
+                          <UpdateProfile/>
+                          </Col>
+                          
+                          
+                          <Col className="border-right ml-2">
+                          <ChangePassword/>
+                          </Col>
                       
-                      
-                      <Col>
-                      <ChangePassword/>
-                      </Col>
-                      
-                      </Row>
+                        </Row>
                       
                       
                       </Card.Text>
@@ -73,34 +47,6 @@ export default function Profile({ fixed }) {
 
 
     
-  //   else{
-  //     content = 
-  //       <Card>
-  //           <Card.Body>
-  //               <Card.Text>
-  //                   جلسه ی کاری شما به اتمام رسیده است . .
-  //               </Card.Text>
-  //               <Button href="/login">
-  //                   ورود
-  //               </Button>
-  //           </Card.Body>
-  //       </Card>
-  //   }
-  // }
-  // else{
-  //   content = 
-  //     <Card>
-  //         <Card.Body>
-  //             <Card.Text>
-  //             در انتظار سرور . .
-  //             </Card.Text>
-  //         </Card.Body>
-  //     </Card>
-      
-    
-  // }
-
-  
 
   return (
     <div >

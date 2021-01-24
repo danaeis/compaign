@@ -9,8 +9,10 @@ import CardDeck from 'react-bootstrap/CardDeck'
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal'
-
+import {Link} from 'react-router-dom'
 import CampDetail from './campDetail'
+import { Redirect } from "react-router-dom";
+import { Col,Row } from "react-bootstrap";
 
 export default function Compaign() {
   
@@ -57,12 +59,30 @@ export default function Compaign() {
       // console.log("on click",id)
       // setModalShow(true); 
       setCompId(id);
-      <CampDetail
-        // show={modalShow}
-        // onHide={() => setModalShow(false)}
-        id = {compId}
-      />  
+      <Redirect to={`/campaignDetail/${compId}`}/>
     } 
+
+    
+
+//   let displayCampain=null;    
+  
+//   userCompaigns[0].map( (compaign, i) => 
+//     displayCampain[i] =  
+//       <Card className="text-center col-md-4 mx-1 mt-4">
+//           <Card.Body>
+//             <Card.Title>{compaign.name}</Card.Title>
+//             <Card.Text>
+//             {compaign.description}
+//             </Card.Text>
+//             {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
+//             <Link className="fixed bottom"  to={`/campaignDetail/${compaign.id}`} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Link>
+            
+          
+//           </Card.Body>
+      
+//       </Card>
+// )
+
 
 
   if(isResponced){
@@ -70,44 +90,57 @@ export default function Compaign() {
     if(userCompaigns.length>0){
       // console.log(userCompaigns[0]);
       return(
-        <div className="row ">
-        <div className="col-md-10 mx-auto my-auto">
-          
-          <p className="text-center mt-5">
-            لیست اردوهای پیش رو :
-          </p>
 
-          <br ></br>
-          <CardDeck className="row">
-          {userCompaigns[0].map( (compaign, i) => 
-            // {console.log(compaign.name)}
-            
-                <Card className="text-center col-md-4 mx-1 mt-4">
-                    <Card.Body>
-                      <Card.Title>{compaign.name}</Card.Title>
-                      <Card.Text>
-                      {compaign.description}
-                      </Card.Text>
-                      <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button>
+        <div className="relative col-md-10 col-sm-10 col-lg-10 mx-auto my-auto">
+        <div className="card text-center border-0 shadow z-depth-2 rounded">
+          <Card >
+              <Card.Header>
+                <Card.Title className="pt-1">
+                <small className="text-info">لیست اردوهای پیش رو :</small>
+                </Card.Title>
+              </Card.Header>
+
+
+              {/* 'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto' */}
+              <Card.Body className="text-center" style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto', 'background-color': 'primary' }}>
                 
-                      
+                
+
+                
                     
-                    </Card.Body>
-                </Card>
-            
-          )}
-          {/* {compId>0 &&  modalShow && */}
-                        <CampDetail
-                        // show={modalShow}
-                        // onHide={() => setModalShow(false)}
-                        id = {compId}
-                      />  
-                      {/* } */}
-          </CardDeck>
-            
-            
-          
-        </div> </div>
+                  
+                  {userCompaigns[0].map( (compaign, i) => 
+                      <Row className="text-center">
+                        <Col>
+                        <Card className="text-center my-2" >
+                            <Card.Body>
+                              <Card.Title>{compaign.name}</Card.Title>
+                              <Card.Text>
+                              {compaign.description}
+                              </Card.Text>
+                              {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
+                              <Link className="fixed bottom"  to={`/campaignDetail/${compaign.id}`} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Link>
+                              
+                            
+                            </Card.Body>
+                        
+                        </Card>
+                        </Col>
+                      </Row>
+                  )} 
+                  
+               
+                
+               
+                
+              </Card.Body>
+          </Card>
+
+        </div></div>
+
+
+
+        
       );
     }
     else{
