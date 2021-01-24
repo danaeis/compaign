@@ -112,11 +112,11 @@ if(redirect) return <Redirect to='/dashboard'/>;
 return(
   <div>
         <div className="row align-items-center min-vh-100 ">
-        <div className="col-md-10 col-sm-10 col-lg-10 mx-auto my-auto">
+        <div className="col-md-7 col-sm-10 col-lg-5 mx-auto my-auto">
         <Card className="text-center">
             <Card.Header className="bg-light text-center">
             <Row className=" px-auto">
-              <Col xs={3} md={2} className="mx-auto mr-0">
+              <Col xs={3} md={4} className="mx-auto ">
                 <Image src={logo2} rounded fluid/>
               </Col>
               {/* <Col xs={3} md={2} className="mx-auto mr-0">

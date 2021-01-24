@@ -12,7 +12,7 @@ import Modal from 'react-bootstrap/Modal'
 import {Link} from 'react-router-dom'
 import CampDetail from './campDetail'
 import { Redirect } from "react-router-dom";
-import { Col,Row } from "react-bootstrap";
+import { CardColumns, CardImg, Col,Row } from "react-bootstrap";
 
 export default function Compaign() {
   
@@ -21,11 +21,7 @@ export default function Compaign() {
   const [error, setError] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [compId, setCompId] = useState(0);
- 
 
-  // const [Compaign, setCompaign] = useState([]);
-  // const [detailError, setDetailError] = useState(null);
-  // const [detailResponced, setDetailResponced] = useState(false);
  
 
   const url=getApi();
@@ -64,24 +60,6 @@ export default function Compaign() {
 
     
 
-//   let displayCampain=null;    
-  
-//   userCompaigns[0].map( (compaign, i) => 
-//     displayCampain[i] =  
-//       <Card className="text-center col-md-4 mx-1 mt-4">
-//           <Card.Body>
-//             <Card.Title>{compaign.name}</Card.Title>
-//             <Card.Text>
-//             {compaign.description}
-//             </Card.Text>
-//             {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
-//             <Link className="fixed bottom"  to={`/campaignDetail/${compaign.id}`} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Link>
-            
-          
-//           </Card.Body>
-      
-//       </Card>
-// )
 
 
 
@@ -108,27 +86,34 @@ export default function Compaign() {
 
                 
                     
+                  <Row>
                   
                   {userCompaigns[0].map( (compaign, i) => 
-                      <Row className="text-center">
-                        <Col>
-                        <Card className="text-center my-2" >
-                            <Card.Body>
-                              <Card.Title>{compaign.name}</Card.Title>
-                              <Card.Text>
-                              {compaign.description}
-                              </Card.Text>
-                              {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
-                              <Link className="fixed bottom"  to={`/campaignDetail/${compaign.id}`} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Link>
+                      
+                      <Card className="text-center  col-xs-12 col-sm-6 col-md-4 " >
+                          <Card.Body>
+                            <CardImg variant="top" src={compaign.image} />
+                            <Card.Title>{compaign.name}</Card.Title>
+                            <Card.Text>
+                            {compaign.description}
+                            </Card.Text>
+                            {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
+                            <Link className="fixed bottom"  to={`/campaignDetail/${compaign.id}`} >
                               
+                              <Button>
+                              {compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} 
+                              </Button>
+                            </Link>
                             
-                            </Card.Body>
-                        
-                        </Card>
-                        </Col>
-                      </Row>
-                  )} 
+                          
+                          </Card.Body>
+                      
+                      </Card>
+                    
+                )} 
                   
+                  
+                  </Row>
                
                 
                

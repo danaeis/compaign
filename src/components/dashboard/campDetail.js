@@ -79,16 +79,17 @@ export default function CampDetail(props) {
                   
                     
                       <h5 className="text-black">
-                        <small className="ml-3 text-primary ">توضیحات اردو:</small>
+                        <small className="ml-3 text-info ">توضیحات اردو:</small>
                       {compaign.description} 
                       </h5>
                       <h5 className="text-primary">
-                        <small className="text-black">هزینه ثبت نام:     </small>
-                          {compaign.cost} تومان
-                        
+                        <small className="text-info">هزینه ثبت نام:     </small>
+                          {compaign.cost} 
+                          <small className="text-black">    تومان </small>
+
                         </h5>
                       <h5 className="text-primary">
-                        <small className="text-black">زمان برگزاری: </small>
+                        <small className="text-info">زمان برگزاری: </small>
                         {compaign.execution_time}
                         </h5>
                         <Button className="text-center my-3 px-5"  >{compaign.is_registered? "ثبت نام شده" : "ثبت نام "}</Button>

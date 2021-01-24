@@ -66,11 +66,12 @@ export default function Header({ fixed }) {
           
           <Navbar.Brand href="/dashboard" className="h5 peach-gradient" >
             سامانه ی اردوها
-          <small className="text-primary mx-3">
-            سعیده دانایی
-            {/* {userName} */}
-            </small>
+          
           </Navbar.Brand>
+          <small className="text-primary mx-3">
+            {/* سعیده دانایی */}
+            {userName}
+            </small>
         {/* </OverlayTrigger> */}
       
 
