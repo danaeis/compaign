@@ -51,13 +51,6 @@ export default function Compaign() {
 
    
 
-    let handleModal = (id) => {
-      // console.log("on click",id)
-      // setModalShow(true); 
-      setCompId(id);
-      <Redirect to={`/campaignDetail/${compId}`}/>
-    } 
-
     
 
 
@@ -86,29 +79,41 @@ export default function Compaign() {
 
                 
                     
-                  <Row>
+                  <Row className="text-center">
                   
                   {userCompaigns[0].map( (compaign, i) => 
                       
-                      <Card className="text-center  col-xs-12 col-sm-6 col-md-4 " >
-                          <Card.Body>
-                            <CardImg variant="top" src={compaign.image} />
-                            <Card.Title>{compaign.name}</Card.Title>
-                            <Card.Text>
-                            {compaign.description}
-                            </Card.Text>
-                            {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
-                            <Link className="fixed bottom"  to={`/campaignDetail/${compaign.id}`} >
-                              
-                              <Button>
-                              {compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} 
-                              </Button>
-                            </Link>
+                      <div className="text-center px-2 py-0 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4  my-1 border-0 ">
+                        <Card className="text-center shadow  border-0  my-auto py-auto h-100"  >
+                          <Card.Body className="">
+                  {(compaign.image )? 
+                            <Card.Img 
+                            variant="top" 
+                            className="mx-auto my-2" 
+                            src={"https://" + compaign.image.substr(16,compaign.image.length)} 
+                            alt="پوستر اردو" 
+                            
+                            width="100%"/>
+                          :<Card.Img variant="top" className="mx-auto my-2" src="#" alt="پوستر اردو" />}
+                            <div className="position-relative fixed-bottom">
+                              <Card.Title>{compaign.name}</Card.Title>
+                              <Card.Text>
+                              {compaign.description}
+                              </Card.Text>
+                              {/* <Button className="fixed bottom"  onClick={() => { handleModal(compaign.id)}} >{compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} </Button> */}
+                              <Link   to={`/campaignDetail/${compaign.id}`} >
+                                
+                                <Button >
+                                {compaign.is_registered ?  "ثبت نام شده":"جزییات بیشتر .. "} 
+                                </Button>
+                              </Link>
+                            </div>
                             
                           
                           </Card.Body>
                       
                       </Card>
+                      </div>
                     
                 )} 
                   

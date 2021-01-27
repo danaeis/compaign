@@ -6,7 +6,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
-import { Card } from "react-bootstrap";
+import { Card,CardImg } from "react-bootstrap";
 import Image from 'react-bootstrap/Image'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -75,9 +75,19 @@ export default function CampDetail(props) {
                 
                 
                     </Card.Header>
-                  <Card.Body className="text-center">
+                  <Card.Body className="text-center" style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto', 'background-color': 'primary' }} >
                   
-                    
+                  {(compaign.image)? 
+                          <Card.Img 
+                            variant="top" 
+                            className="mx-auto my-2 col-md-6" 
+                            // onClick={()=> { return(<Redirect to={"https://" + compaign.image.substr(16,compaign.image.length)}/>)}}
+                            src={"https://" + compaign.image.substr(16,compaign.image.length)} 
+                            alt="پوستر اردو" 
+                            height="100%"/>
+                          
+                          :<Card.Img variant="top" className="mx-auto my-2" src="#" alt="پوستر اردو" />}
+                  
                       <h5 className="text-black">
                         <small className="ml-3 text-info ">توضیحات اردو:</small>
                       {compaign.description} 

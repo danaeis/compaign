@@ -64,21 +64,21 @@ export default function Header({ fixed }) {
           className="bg-light" variant="light"
         > */}
           
-          <Navbar.Brand href="/dashboard" className="h5 peach-gradient" >
+          <Navbar.Brand href="#" className="h5 peach-gradient" >
             سامانه ی اردوها
-          
-          </Navbar.Brand>
-          <small className="text-primary mx-3">
-            {/* سعیده دانایی */}
+            <small className="text-primary mx-3 pr-2 border-right">
+            
             {userName}
             </small>
+          </Navbar.Brand>
+          
         {/* </OverlayTrigger> */}
       
 
       <Navbar.Toggle aria-controls="responsive-navbar-nav"  className="primary"></Navbar.Toggle>
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/dashboard" className="d-none d-lg-block">صفحه ی اصلی</Nav.Link>
+          <Nav.Link href="/dashboard" >صفحه ی اصلی</Nav.Link>
           <Nav.Link href="/dashboard/profile">   پروفایل</Nav.Link>
           <Nav.Link href="#" onClick={handleShow} >خروج</Nav.Link>
         </Nav>

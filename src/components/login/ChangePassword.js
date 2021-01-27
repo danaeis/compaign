@@ -22,7 +22,7 @@ export default function ChangePassword(props) {
 })
 
 
- 
+  const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
   const [isResponced, setIsResponced] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,14 +40,14 @@ export default function ChangePassword(props) {
     
       console.log(state.curPassword + " and " + state.newpassword + " and " + state.renewpassword);
 
-
+      setIsChanged(false);
       setIsLoading(true);
       event.preventDefault();
-      console.log("on submit");
+      
       console.log(state.newpassword );
       if(state.newpassword === state.renewpassword){
-        console.log("on call");
-        setReset(true);
+        
+      
         axios.post(`${url}/api/auth/users/set_password/`,
         
             {
@@ -72,16 +72,33 @@ export default function ChangePassword(props) {
               //}
               setIsResponced(true);
               setIsLoading(false);
+              setIsError(false);
 
             })
             .catch(e => {
-              console.log("error:",e);
+              console.log("error:",e.response.data);
+              if(e.response.data["current_password"]){
+                setError("رمز فعلی اشتباه است\n");
+              }
+              if(e.response.data["new_password"]){
+                setError("رمز جدید وارد شده بسیار ضعیف است"+"\n");
+              }
+              else{
+                setError(
+                  "تغییر رمزعبور شما با مشکل مواجه شد"+
+                "دوباره امتحان کنید" 
+                );
+              }
               setShow(true);
-             // props.show = true;
               setIsLoading(false);
               setIsResponced(true);
-              setError(true);
+              setIsError(true);
             })
+      }
+      else{
+        setError("رمز وارد شده و تکرار آن یکسان نمیباشد\n");
+        setIsError(true);
+        setIsLoading(false);
       }
 
   }
@@ -102,7 +119,7 @@ export default function ChangePassword(props) {
             
              <div>
                   <form className=""  method="POST" onSubmit={(e) => {handleSubmit(e);}} >
-                          
+                    
                           <div className="form-group border rounded-lg shadow-top-sm" >
                           <input 
                               aria-label="cuPassword"
@@ -139,13 +156,16 @@ export default function ChangePassword(props) {
                           />
                           </div>
                          
-                            {error && <label variant="danger">{error}</label>}
-                         
+                          <label variant="danger" className="texts text-danger py-3">
+                          {isError ? error 
+                          :null }
+                        </label>
                             <div className="form-group">
                               <Button className="text-center" type="submit"> 
                               {isLoading? <Spinner animation="border" variant="primary" />:" تغییر رمزعبور"} 
                               </Button>
                             </div>
+                            
 
                   </form>
                   
@@ -184,32 +204,32 @@ if(isChanged){
 
 }
 
-if(error){
-  result=
-  <div className="fixed-bottom mx-4 my-4">
-        <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
-          <Toast.Header>
-          <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
-            <p></p>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded mr-2"
-              alt=""
-            />
+// if(error){
+//   result=
+//   <div className="fixed-bottom mx-4 my-4">
+//         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
+//           <Toast.Header>
+//           <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
+//             <p></p>
+//             <img
+//               src="holder.js/20x20?text=%20"
+//               className="rounded mr-2"
+//               alt=""
+//             />
             
             
-            <small></small>
-          </Toast.Header>
-          <Toast.Body>
-          تغییر رمزعبور شما با مشکل مواجه شد
-          دوباره امتحان کنید
+//             <small></small>
+//           </Toast.Header>
+//           <Toast.Body>
+//           تغییر رمزعبور شما با مشکل مواجه شد
+//           دوباره امتحان کنید
             
-          </Toast.Body>
+//           </Toast.Body>
           
-        </Toast>
-      </div> 
+//         </Toast>
+//       </div> 
 
-}
+// }
 
 
 

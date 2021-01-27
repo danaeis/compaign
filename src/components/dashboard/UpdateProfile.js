@@ -36,6 +36,7 @@ export default function UpdateProfile(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [reset, setReset] = useState(false);
 
+  const [isError, setIsError] = useState(false);
 
 
   const [show, setShow] = useState(false);
@@ -67,6 +68,7 @@ export default function UpdateProfile(props) {
       .catch((error) => {
         setIsResponced(true);
         // setUserName()
+        //setError(error.response);
         console.log("error:",error);
       })
   },[url])
@@ -78,15 +80,18 @@ export default function UpdateProfile(props) {
   
     if (input.account_number === "") {
       isValid = false;
-      errors = errors + "فیلد شماره حساب نمیتواند خالی باشد";
+      setIsError(true);
+      errors = errors + "فیلد شماره حساب نمیتواند خالی باشد\n";
     }    
-    if (input.mobile_phone_number === "") {
+    if (input.mobile_phone_number === "" || input.mobile_phone_number.length < 11) {
       isValid = false;
-      errors = errors + "فیلد شماره تلفن نمیتواند خالی باشد";
+      setIsError(true);
+      errors = errors + "فیلد شماره تلفن نمیتواند کمتر از ۱۱ رقم باشد\n";
     }
     if (input.email === "") {
         isValid = false;
-        errors = errors +  "فیلد ایمیل نمیتواند خالی باشد";
+        setIsError(true);
+        errors = errors +  "فیلد ایمیل نمیتواند خالی باشد\n";
       }
     
     setError(errors)
@@ -133,12 +138,18 @@ export default function UpdateProfile(props) {
             })
             .catch(e => {
               console.log("error:",e);
-             
+              setError(
+                "تغییر اطلاعات پروفایل شما با مشکل مواجه شد"+
+                "دوباره امتحان کنید"
+                )
               setIsLoading(false);
               setIsResponced(true);
-              setError(true);
+              setIsError(true);
             })
       }
+     else{
+       setIsLoading(false);
+     }
 
   }
  
@@ -154,12 +165,13 @@ export default function UpdateProfile(props) {
     content=
           <Card className="text-right border-0">
             {/* <Card.Header className="bg-light text-center"> */}
-              <Card.Title className="h5 text-primary text-right pt-4 px-4"><small className="text-primary">دانشجو:</small> {userName} </Card.Title>
+              {/* <Card.Title className="h5 text-primary text-right pt-4 px-4"><small className="text-info">نام:</small> {userName} </Card.Title> */}
             {/* </Card.Header> */}
             <Card.Body className="text-center">
              <div >
                   <form className=""  method="POST" onSubmit={(e) => {handleSubmit(e);setShow(true);}} >
 
+                  
 
                           <div className="form-group rounded-lg shadow-top-sm">
                               <label className="text-info text-right">شماره دانشجویی:</label>
@@ -219,7 +231,7 @@ export default function UpdateProfile(props) {
                           <input 
                               aria-label="email" 
                               name="email" 
-                              type="text" 
+                              type="email" 
                               required 
                               className="form-control "
                               value={input.email}
@@ -227,10 +239,13 @@ export default function UpdateProfile(props) {
                           />
                           </div>
 
-                        
+                          <label variant="danger" className="texts text-danger py-3">
+                          {isError ? error 
+                          :null }
+                        </label>
 
-                            {error && <label variant="danger">{error}</label>}
                          
+
                             <div className="form-group">
                               <Button className="text-center" type="submit"> 
                               {isLoading? <Spinner animation="border" variant="primary" />:" اعمال تغییرات"} 
@@ -251,7 +266,7 @@ export default function UpdateProfile(props) {
    let result= null;
 if(isUpdate){
   result=
-  <div className="fixed-bottom mx-4 my-4">
+  <div className="fixed-bottom mx-4 my-4 shadow">
         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
           <Toast.Header>
           <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
@@ -278,36 +293,31 @@ if(isUpdate){
 
 }
 
-if(error){
-  result=
-  <div className="fixed-bottom mx-4 my-4">
-        <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
-          <Toast.Header>
-          <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
-            <p></p>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded mr-2"
-              alt=""
-            />
+// if(error){
+//   result=
+//   <div className="fixed-bottom mx-4 my-4">
+//         <Toast onClose={() => setShow(false)} show={show} delay={5000} autohide>
+//           <Toast.Header>
+//           <strong className="mr-auto text-primary text-right">سامانه اردوها</strong>
+//             <p></p>
+//             <img
+//               src="holder.js/20x20?text=%20"
+//               className="rounded mr-2"
+//               alt=""
+//             />
             
             
-            <small></small>
-          </Toast.Header>
-          <Toast.Body>
-          تغییر اطلاعات پروفایل شما با مشکل مواجه شد
-          دوباره امتحان کنید
-            {/* {!isChanged?
-            "رمزعبور شما با موفقیت تغییر کرد."
-              :
-              "  رمز عبور شما بنا به دلیلی تغییر نکرد:(  دوباره امتحان کنید"
-            } */}
-          </Toast.Body>
+//             <small></small>
+//           </Toast.Header>
+//           <Toast.Body>
+          // تغییر اطلاعات پروفایل شما با مشکل مواجه شد
+          // دوباره امتحان کنید
+//           </Toast.Body>
          
-        </Toast>
-      </div> 
+//         </Toast>
+//       </div> 
 
-}
+// }
 
 
 

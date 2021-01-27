@@ -15,23 +15,23 @@ export const getApi = () =>{
 
 // set the token and user from the session storage
 export const setUserSession = (token,refresh) => {
-  sessionStorage.setItem('token', token);
-  sessionStorage.setItem('refresh', refresh);
-  sessionStorage.setItem('loginStart', Date());
-  sessionStorage.setItem('refreshStart', Date());
-  sessionStorage.setItem('loggedIn',true);
+  localStorage.setItem('token', token);
+  localStorage.setItem('refresh', refresh);
+  localStorage.setItem('loginStart', Date());
+  localStorage.setItem('refreshStart', Date());
+  localStorage.setItem('loggedIn',true);
 }
 
 export const getUser=()=>{
   //if(sessionStorage.getItem('loggedIn')===true) sessionStorage.setItem('loggedIn',false);
-  return sessionStorage.getItem('loggedIn')||false;
+  return localStorage.getItem('loggedIn')||false;
 }
 // return the token from the session storage
 export const getToken = () => {
   const url=getApi();
   const currentDateTime = new Date();
-  const startDateTime = new Date(sessionStorage.getItem('loginStart'));
-  const lastRefreshDateTime = new Date(sessionStorage.getItem('refreshStart'));
+  const startDateTime = new Date(localStorage.getItem('loginStart'));
+  const lastRefreshDateTime = new Date(localStorage.getItem('refreshStart'));
   //console.log("now: " + currentDateTime + " passed from " + lastRefreshDateTime + " : " + Math.round((currentDateTime - lastRefreshDateTime)/(1000*60)));
   
 
@@ -42,31 +42,30 @@ export const getToken = () => {
     // console.log(sessionStorage.getItem('refresh'));
     axios.post(`${url}/api/auth/jwt/refresh/`,
     {
-        "refresh" : sessionStorage.getItem('refresh')
+        "refresh" : localStorage.getItem('refresh')
     
     })
     .then((response)=>{
       //console.log(response.data.access);
-      sessionStorage.setItem('token', response.data.access);
-      sessionStorage.setItem('loginStart',Date());
+      localStorage.setItem('token', response.data.access);
+      localStorage.setItem('loginStart',Date());
     })
     //console.log("refreshing");
   }
   //  else{
   //   console.log("access allowed");
   //  }
-  return sessionStorage.getItem('token') || null;
+  return localStorage.getItem('token') || null;
 }
 
 // // remove the token and user from the session storage
 export const removeUserSession = () => {
   //console.log("logout");
-  sessionStorage.removeItem('loggedIn');
-  sessionStorage.removeItem('token');
-  sessionStorage.removeItem('refresh');
-  sessionStorage.removeItem('loginStart');
-  sessionStorage.removeItem('refreshStart');
+  localStorage.removeItem('loggedIn');
+  localStorage.removeItem('token');
+  localStorage.removeItem('refresh');
+  localStorage.removeItem('loginStart');
+  localStorage.removeItem('refreshStart');
 
   // sessionStorage.removeItem('user');
 }
-
